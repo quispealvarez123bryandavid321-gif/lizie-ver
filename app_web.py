@@ -51,7 +51,7 @@ with col_logo2:
 
 st.divider()
 
-# Selector de origen de imagen (Cámara o Galería)
+# Selector de origen de imagen
 opcion = st.radio("Selecciona cómo ingresar la imagen:", ("📸 Usar Cámara del Celular", "📂 Subir de Galería"))
 
 imagen_input = None
@@ -68,7 +68,7 @@ if imagen_input is not None:
     if st.button("⚡ ANALIZAR PLANTA", type="primary", use_container_width=True):
         with st.spinner("⏳ Analizando planta con visión artificial..."):
             try:
-               model = genai.GenerativeModel('models/gemini-1.5-flash')
+                model = genai.GenerativeModel('models/gemini-1.5-flash')
                 
                 prompt = (
                     "Si la imagen NO es una planta o vegetal, responde ÚNICAMENTE: "
