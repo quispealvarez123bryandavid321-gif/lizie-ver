@@ -68,18 +68,9 @@ if imagen_input is not None:
     if st.button("⚡ ANALIZAR PLANTA", type="primary", use_container_width=True):
         with st.spinner("⏳ Analizando planta con visión artificial..."):
             try:
-               model = genai.GenerativeModel('gemini-1.5-pro')
+                model = genai.GenerativeModel('gemini-1.5-pro')
                 
-                prompt = (
-                    "Si la imagen NO es una planta o vegetal, responde ÚNICAMENTE: "
-                    "'❌ No se detectó ninguna planta en la imagen. Por favor sube una foto de una planta o cultivo.'\n\n"
-                    "Si SÍ es una planta, actúa como un experto agrónomo pero sé MUY BREVE, DIRECTO Y CONCISO. "
-                    "No uses frases introductorias ni rellenos. Usa exactamente este formato corto:\n\n"
-                    "🌿 Planta: [Nombre común]\n"
-                    "🩺 Estado: [Sana / Con plaga / Enferma / Falta de agua o nutriente]\n"
-                    "🔍 Problema: [Explicación en máximo 1 o 2 oraciones sencillas]\n"
-                    "💡 Solución rápida: [Acción directa en máximo 1 o 2 oraciones]"
-                )
+                prompt = "Si la imagen NO es una planta o vegetal, responde ÚNICAMENTE: '❌ No se detectó ninguna planta en la imagen. Por favor sube una foto de una planta o cultivo.' Si SÍ es una planta, actúa como un experto agrónomo pero sé MUY BREVE, DIRECTO Y CONCISO. No uses frases introductorias ni rellenos. Usa exactamente este formato corto: 🌿 Planta: [Nombre común] | 🩺 Estado: [Sana / Con plaga / Enferma / Falta de agua o nutriente] | 🔍 Problema: [Explicación en máximo 1 o 2 oraciones sencillas] | 💡 Solución rápida: [Acción directa en máximo 1 o 2 oraciones]"
 
                 response = model.generate_content([prompt, img])
 
