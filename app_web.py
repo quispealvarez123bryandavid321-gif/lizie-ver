@@ -68,7 +68,7 @@ if imagen_input is not None:
     if st.button("⚡ ANALIZAR PLANTA", type="primary", use_container_width=True):
         with st.spinner("⏳ Analizando planta con visión artificial..."):
             try:
-                model = genai.GenerativeModel('gemini-1.5-flash')
+                model = genai.GenerativeModel('gemini-1.5-flash-latest')
                 
                 prompt = (
                     "Si la imagen NO es una planta o vegetal, responde ÚNICAMENTE: "
