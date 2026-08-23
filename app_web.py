@@ -1,11 +1,11 @@
 import os
 import streamlit as st
 from PIL import Image
-from google import genai
+import google.generativeai as genai
 
 API_KEY = "AQ.Ab8RN6KV1D3C_jsD6WKYrAozJsrWtRM3QwlfaewR1ClPZt2rVA"
+genai.configure(api_key=API_KEY)
 
-# Configuración de la página
 st.set_page_config(
     page_title='LIZIE VER - "El ojo artificial"',
     page_icon="🌱",
@@ -25,7 +25,6 @@ def buscar_logo(palabras_clave):
                     pass
     return None
 
-# Encabezado con Logos y Títulos
 col_logo1, col_texto, col_logo2 = st.columns([1, 3, 1])
 
 logo_e = buscar_logo(["eureka"])
@@ -47,7 +46,6 @@ with col_logo2:
 
 st.divider()
 
-# Selector de origen de imagen (Cámara o Galería)
 opcion = st.radio("Selecciona cómo ingresar la imagen:", ("📸 Usar Cámara del Celular", "📂 Subir de Galería"))
 
 imagen_input = None
@@ -64,7 +62,7 @@ if imagen_input is not None:
     if st.button("⚡ ANALIZAR PLANTA", type="primary", use_container_width=True):
         with st.spinner("⏳ Analizando planta con visión artificial..."):
             try:
-                client = genai.Client(api_key=API_KEY)
+                model = genai.GenerativeModel('gemini-1.5-flash')
                 
                 prompt = (
                     "Si la imagen NO es una planta o vegetal, responde ÚNICAMENTE: "
@@ -77,10 +75,7 @@ if imagen_input is not None:
                     "💡 Solución rápida: [Acción directa en máximo 1 o 2 oraciones]"
                 )
 
-                response = client.models.generate_content(
-                    model="gemini-3.6-flash",
-                    contents=[img, prompt]
-                )
+                response = model.generate_content([prompt, img])
 
                 st.success("Análisis completado")
                 st.markdown("### 📋 Diagnóstico Agrónomo")
