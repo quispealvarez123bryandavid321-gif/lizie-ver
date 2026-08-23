@@ -3,9 +3,13 @@ import streamlit as st
 from PIL import Image
 import google.generativeai as genai
 
-API_KEY = "AQ.Ab8RN6KV1D3C_jsD6WKYrAozJsrWtRM3QwlfaewR1ClPZt2rVA"
-genai.configure(api_key=API_KEY)
+# Configurar API Key desde los Secrets de Streamlit
+if "GEMINI_API_KEY" in st.secrets:
+    genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
+else:
+    st.error("Falta configurar la GEMINI_API_KEY en los Secrets de Streamlit.")
 
+# Configuración de la página
 st.set_page_config(
     page_title='LIZIE VER - "El ojo artificial"',
     page_icon="🌱",
@@ -25,6 +29,7 @@ def buscar_logo(palabras_clave):
                     pass
     return None
 
+# Encabezado con Logos y Títulos
 col_logo1, col_texto, col_logo2 = st.columns([1, 3, 1])
 
 logo_e = buscar_logo(["eureka"])
@@ -46,6 +51,7 @@ with col_logo2:
 
 st.divider()
 
+# Selector de origen de imagen (Cámara o Galería)
 opcion = st.radio("Selecciona cómo ingresar la imagen:", ("📸 Usar Cámara del Celular", "📂 Subir de Galería"))
 
 imagen_input = None
