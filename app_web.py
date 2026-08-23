@@ -1,11 +1,11 @@
 import os
 import streamlit as st
 from PIL import Image
-import google.generativeai as genai
+from google import genai
 
 # Configurar API Key desde los Secrets de Streamlit
 if "GEMINI_API_KEY" in st.secrets:
-    genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
+    client = genai.Client(api_key=st.secrets["GEMINI_API_KEY"])
 else:
     st.error("Falta configurar la GEMINI_API_KEY en los Secrets de Streamlit.")
 
@@ -68,11 +68,12 @@ if imagen_input is not None:
     if st.button("⚡ ANALIZAR PLANTA", type="primary", use_container_width=True):
         with st.spinner("⏳ Analizando planta con visión artificial..."):
             try:
-                model = genai.GenerativeModel('gemini-1.5-pro')
-                
                 prompt = "Si la imagen NO es una planta o vegetal, responde ÚNICAMENTE: '❌ No se detectó ninguna planta en la imagen. Por favor sube una foto de una planta o cultivo.' Si SÍ es una planta, actúa como un experto agrónomo pero sé MUY BREVE, DIRECTO Y CONCISO. No uses frases introductorias ni rellenos. Usa exactamente este formato corto: 🌿 Planta: [Nombre común] | 🩺 Estado: [Sana / Con plaga / Enferma / Falta de agua o nutriente] | 🔍 Problema: [Explicación en máximo 1 o 2 oraciones sencillas] | 💡 Solución rápida: [Acción directa en máximo 1 o 2 oraciones]"
 
-                response = model.generate_content([prompt, img])
+                response = client.models.generate_content(
+                    model='gemini-2.5-flash',
+                    contents=[prompt, img]
+                )
 
                 st.success("Análisis completado")
                 st.markdown("### 📋 Diagnóstico Agrónomo")
