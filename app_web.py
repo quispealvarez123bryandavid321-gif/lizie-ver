@@ -71,7 +71,7 @@ if imagen_input is not None:
                 prompt = "Si la imagen NO es una planta o vegetal, responde ÚNICAMENTE: '❌ No se detectó ninguna planta en la imagen. Por favor sube una foto de una planta o cultivo.' Si SÍ es una planta, actúa como un experto agrónomo pero sé MUY BREVE, DIRECTO Y CONCISO. No uses frases introductorias ni rellenos. Usa exactamente este formato corto: 🌿 Planta: [Nombre común] | 🩺 Estado: [Sana / Con plaga / Enferma / Falta de agua o nutriente] | 🔍 Problema: [Explicación en máximo 1 o 2 oraciones sencillas] | 💡 Solución rápida: [Acción directa en máximo 1 o 2 oraciones]"
 
                 response = client.models.generate_content(
-                    model='gemini-1.5-flash',
+                    model='gemini-2.5-flash',
                     contents=[prompt, img]
                 )
 
