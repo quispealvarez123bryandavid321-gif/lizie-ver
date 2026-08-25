@@ -69,11 +69,11 @@ if imagen_input is not None:
         with st.spinner("⏳ Analizando planta con visión artificial..."):
             prompt = "Si la imagen NO es una planta o vegetal, responde ÚNICAMENTE: '❌ No se detectó ninguna planta en la imagen. Por favor sube una foto de una planta o cultivo.' Si SÍ es una planta, actúa como un experto agrónomo pero sé MUY BREVE, DIRECTO Y CONCISO. No uses frases introductorias ni rellenos. Usa exactamente este formato corto: 🌿 Planta: [Nombre común] | 🩺 Estado: [Sana / Con plaga / Enferma / Falta de agua o nutriente] | 🔍 Problema: [Explicación en máximo 1 o 2 oraciones sencillas] | 💡 Solución rápida: [Acción directa en máximo 1 o 2 oraciones]"
 
-            # Lista de modelos compatibles para alternar si alguno está saturado
+            # Modelos vigentes según las últimas políticas de Google AI Studio
             modelos_disponibles = [
+                'gemini-3.6-flash',
                 'gemini-2.5-flash',
-                'gemini-1.5-flash',
-                'gemini-2.5-pro'
+                'gemini-1.5-flash'
             ]
 
             respuesta_exitosa = False
@@ -88,9 +88,9 @@ if imagen_input is not None:
                     st.markdown("### 📋 Diagnóstico Agrónomo")
                     st.info(response.text)
                     respuesta_exitosa = True
-                    break  # Si tiene éxito, sale del bucle
+                    break
                 except Exception:
-                    continue  # Si falla por saturación, intenta con el siguiente modelo de la lista
+                    continue
 
             if not respuesta_exitosa:
                 st.error("Los servidores de análisis están experimentando alta demanda momentánea. Por favor, vuelve a presionar el botón en 5 segundos.")
